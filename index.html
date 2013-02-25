@@ -1,0 +1,53 @@
+<head>
+	<script src="JsonToControl.js"></script>
+	<style type="text/css">
+	#root {
+		background-color: gray;
+	}
+	.sub {
+		background-color: orange;
+	}
+	.subTable { 
+		background-color: blue;
+	}
+	</style>
+	<script type="text/javascript">
+
+	function onControlToJson () {
+		var rootNode = document.getElementById("root");
+		if (!rootNode) {
+			console.log("onControlToJson root node is null");
+			return;
+		};
+
+		document.getElementById("textarea").value = JSON.stringify(convertDivToJson(document.getElementById("root")));
+	}
+
+	function onJsonToControl () {
+
+		var rootNode = document.getElementById("root");
+		if (rootNode) {
+			rootNode.parentNode.removeChild(rootNode);
+		};
+
+		var rootDiv = createDivFromJsonObject(JSON.parse(document.getElementById("textarea").value));
+		rootDiv.id = "root";
+		document.body.appendChild(rootDiv);
+	}
+
+	function onClearControl () {
+		
+		var rootNode = document.getElementById("root");
+		if (rootNode) {
+			rootNode.parentNode.removeChild(rootNode);
+		};
+	}
+	</script>
+</head>
+<body>
+	<textarea id="textarea" cols=100 rows=10>{"a":1, "str":"str", "check":true, "sub":{"subText":"subText"}, "subTable":[{"sub1":"sub1"}, {"sub2":"sub2"}]}</textarea>
+	<br/>
+	<button onclick="onJsonToControl()">Json -> Control</button>
+	<button onclick="onControlToJson()">Control -> Json</button>
+	<button onclick="onClearControl()">clear</button>
+</body>
