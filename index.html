@@ -1,6 +1,9 @@
 <head>
 	<script src="JsonToControl.js"></script>
 	<style type="text/css">
+	div {
+		margin: 10px;
+	}
 	#root {
 		background-color: gray;
 	}
@@ -8,7 +11,7 @@
 		background-color: orange;
 	}
 	.subTable { 
-		background-color: blue;
+		background-color: yellow;
 	}
 	</style>
 	<script type="text/javascript">
@@ -23,6 +26,12 @@
 		document.getElementById("textarea").value = JSON.stringify(convertDivToJson(document.getElementById("root")));
 	}
 
+	function getColorByDepth (depth) {
+		var alpha = 255 - (depth % 5) * 20;
+
+		return "rgb(" + alpha + "," + alpha + "," + alpha + ")";
+	}
+
 	function onJsonToControl () {
 
 		var rootNode = document.getElementById("root");
@@ -33,6 +42,26 @@
 		var rootDiv = createDivFromJsonObject(JSON.parse(document.getElementById("textarea").value));
 		rootDiv.id = "root";
 		document.body.appendChild(rootDiv);
+
+		// change div background color
+		var divNodes = document.getElementsByTagName("div");
+		for (var i = 0; i < divNodes.length; ++i) {
+
+			var divDepth = 0;
+			var divNode = divNodes[i];
+			var parentDiv = divNode;
+
+			while (parentDiv) {
+				if (parentDiv == document.body) {
+					break;
+				};
+
+				parentDiv = parentDiv.parentNode;
+				divDepth++;
+			}
+
+			divNode.style.backgroundColor = getColorByDepth(divDepth);
+		}
 	}
 
 	function onClearControl () {

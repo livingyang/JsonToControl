@@ -94,11 +94,24 @@
 				subTableDivNode.title = "array";
 				divNode.appendChild(subTableDivNode);
 
+				// add table label
+				var subTableDivNodeLabel = document.createElement("p");
+				subTableDivNodeLabel.innerHTML = "Table:" + key;
+				subTableDivNode.insertBefore(subTableDivNodeLabel, subTableDivNode.childNodes[0]);
+
 				for (var childItemIndex in childValue)
 				{
 					var childItemValue = childValue[childItemIndex];
 					if (childItemValue instanceof Object && (childItemValue instanceof Array == false)) {
-						subTableDivNode.appendChild(createDivFromJsonObject(childItemValue));
+
+						var tableItemNode = createDivFromJsonObject(childItemValue);
+						subTableDivNode.appendChild(tableItemNode);
+
+						// add table item label
+						var tableItemDivNodeLabel = document.createElement("p");
+						tableItemDivNodeLabel.innerHTML = key + "[" + childItemIndex + "]";
+						tableItemNode.insertBefore(tableItemDivNodeLabel, tableItemNode.childNodes[0]);
+
 					};
 				}
 
@@ -109,6 +122,12 @@
 				var subDivNode = createDivFromJsonObject(childValue);
 				subDivNode.className = key;
 				divNode.appendChild(subDivNode);
+
+				// add div label
+				var subDivNodeLabel = document.createElement("p");
+				subDivNodeLabel.innerHTML = "Layer:" + key;
+				subDivNode.insertBefore(subDivNodeLabel, subDivNode.childNodes[0]);
+
 				continue;
 			};
 
