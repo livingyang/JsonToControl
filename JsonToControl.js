@@ -1,3 +1,5 @@
+(function() {
+
 	function getInputValue (input) {
 		switch (input.type)
 		{
@@ -142,3 +144,8 @@
 
 		return divNode;
 	}
+
+	this.convertDivToJson = convertDivToJson;
+	this.createDivFromJsonObject = createDivFromJsonObject;
+
+}).call(this);
